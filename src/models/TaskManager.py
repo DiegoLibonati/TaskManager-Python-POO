@@ -10,48 +10,53 @@ from src.utils.exceptions import TaskAlreadyExistsError
 
 class TaskManager:
     def __init__(self) -> None:
-        self.__tasks: list[Task] = []
+        self.__tasks: dict[str, Task] = {}
 
     @property
-    def tasks(self) -> list[Task]:
+    def tasks(self) -> dict[str, Task]:
         return self.__tasks
 
     def add_task(self, task: Task) -> None:
         if not isinstance(task, Task): raise InvalidTaskError("You must enter a valid Task template.")
         
-        if task in self.tasks: raise TaskAlreadyExistsError("This task already exists in the task list")
+        if task in self.tasks.values(): raise TaskAlreadyExistsError("This task already exists in the task list.")
 
-        self.__tasks.append(task)
+        self.__tasks[task.id] = task
 
     def remove_task(self, id_task: str) -> None:
         if not id_task: raise InvalidTaskIdError("You must enter a valid ID.")
 
-        self.__tasks = [task for task in self.tasks if task.id != id_task]
+        task = self._find_task_by_id(id_task=id_task)
+        
+        del self.__tasks[task.id]
 
     def edit_task(self, id_task: str, title: str = "", description: str = "", expiration_date: datetime = None) -> None:
         if not id_task: raise InvalidTaskIdError("You must enter a valid ID.")
-        
-        self.current_task = self._find_task_by_id(id_task=id_task)
-        self.current_task.edit(title=title, description=description, expiration_date=expiration_date)
+
+        task = self._find_task_by_id(id_task=id_task)
+
+        task.edit(title=title, description=description, expiration_date=expiration_date)
 
     def move_task_by_state(self, id_task: str, state: StateType) -> None:
         if not id_task: raise InvalidTaskIdError("You must enter a valid ID.")
         
-        self.current_task = self._find_task_by_id(id_task=id_task)
-        self.current_task.change_task_state(state=state)
+        task = self._find_task_by_id(id_task=id_task)
+        task.change_state(state=state)
 
     def print_tasks(self) -> None:
-        print(f"----- Tasks ({len(self.tasks)}) -----")
-        for task in self.tasks:
+        print(f"----- Tasks ({len(self.tasks)}) -----\n")
+        for task in self.tasks.values():
             print(f"---- Start Task: {task.id} -----")
             print(task)
-            print(f"---- End Task: {task.id} -----")
+            print(f"---- End Task: {task.id} -----\n\n")
 
     def _find_task_by_id(self, id_task: str) -> Task:
-        for task in self.tasks:
-            if task.id == id_task:
-                return task
-        raise TaskNotFoundError(f"Task not found.")
+        task = self.tasks.get(id_task, None)
+        
+        if not task: raise TaskNotFoundError(f"Task not found.")
+
+        return task
+
 
 def main() -> None:
     task_manager = TaskManager()
