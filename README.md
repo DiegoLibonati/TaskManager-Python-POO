@@ -18,7 +18,7 @@ IMPORTANT: This project was created for practice POO
 
 ## Libraries used
 
-1. pytest -> You need to install it -> `pip install pytest`
+1. pytest
 2. datetime
 3. typing
 4. uuid
@@ -30,6 +30,9 @@ IMPORTANT: This project was created for practice POO
 
 ## PyTest
 
-1. Enter the test folder
-2. Run the command `pytest --log-cli-level=INFO`
-3. Now you can see if the tests passed
+1. Join to the correct path of the clone
+2. Execute: `python -m venv venv`
+3. Execute in Windows: `venv\Scripts\activate`
+4. Execute: `pip install -r requirements.txt`
+5. Execute: `pip install -r requirements.test.txt`
+6. Execute: `pytest --log-cli-level=INFO`
