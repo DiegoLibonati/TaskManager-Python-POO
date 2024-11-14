@@ -1,3 +1,6 @@
+from typing import KeysView
+from typing import ValuesView
+
 from datetime import datetime
 
 from src.models.Task import Task
@@ -15,11 +18,23 @@ class TaskManager:
     @property
     def tasks(self) -> dict[str, Task]:
         return self.__tasks
+    
+    @property
+    def tasks_keys(self) -> KeysView[str]:
+        return self.tasks.keys()
+    
+    @property
+    def tasks_values(self) -> ValuesView[Task]:
+        return self.tasks.values()
+    
+    @property
+    def len_tasks(self) -> int:
+        return len(self.tasks)
 
     def add_task(self, task: Task) -> None:
         if not isinstance(task, Task): raise InvalidTaskError("You must enter a valid Task template.")
         
-        if task in self.tasks.values(): raise TaskAlreadyExistsError("This task already exists in the task list.")
+        if task in self.tasks_values: raise TaskAlreadyExistsError("This task already exists in the task list.")
 
         self.__tasks[task.id] = task
 
@@ -44,8 +59,8 @@ class TaskManager:
         task.change_state(state=state)
 
     def print_tasks(self) -> None:
-        print(f"----- Tasks ({len(self.tasks)}) -----\n")
-        for task in self.tasks.values():
+        print(f"----- Tasks ({self.len_tasks}) -----\n")
+        for task in self.tasks_values:
             print(f"---- Start Task: {task.id} -----")
             print(task)
             print(f"---- End Task: {task.id} -----\n\n")
