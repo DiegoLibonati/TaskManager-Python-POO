@@ -18,11 +18,17 @@ IMPORTANT: This project was created for practice POO
 
 ## Libraries used
 
-1. pytest
-2. datetime
-3. typing
-4. uuid
-5. logging
+#### Requirements.txt
+
+```
+No 3rd libraries used.
+```
+
+#### Requirements.test.txt
+
+```
+pytest
+```
 
 ## Portfolio Link
 
