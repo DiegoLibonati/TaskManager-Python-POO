@@ -3,8 +3,12 @@
 ## Getting Started
 
 1. Clone the repository
-2. Enter the folder of our cloned project
-3. Use `python -m src.models.TaskManager` -> everything in main of TaskManager.py will be executed.
+2. Join to the correct path of the clone
+3. Execute: `python -m venv venv`
+4. Execute in Windows: `venv\Scripts\activate`
+5. Execute: `pip install -r requirements.txt`
+6. Execute: `pip install -r requirements.test.txt`
+7. Use `python -m src.models.TaskManager` -> everything in main of TaskManager.py will be executed.
 
 ## Description
 
@@ -37,8 +41,5 @@ pytest
 ## Testing
 
 1. Join to the correct path of the clone
-2. Execute: `python -m venv venv`
-3. Execute in Windows: `venv\Scripts\activate`
-4. Execute: `pip install -r requirements.txt`
-5. Execute: `pip install -r requirements.test.txt`
-6. Execute: `pytest --log-cli-level=INFO`
+2. Execute in Windows: `venv\Scripts\activate`
+3. Execute: `pytest --log-cli-level=INFO`
